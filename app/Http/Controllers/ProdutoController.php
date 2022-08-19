@@ -69,18 +69,32 @@ class ProdutoController extends Controller
         session(['cart' => $carrinho]);
         return redirect()->route('ver_carrinho');
     }
-    public function enviarProduto(Request $request){
+
+    public function enviarProdutos(Request $request){
         $dados = $request->all();
-        $response = Http::post('http://127.0.0.1:8090/produtos', [
+        $response = Http::post('http://127.0.0.1:8090/produtos',[
             'imagem'=> $request->input('imagem'),
             'nome'=> $request->input('nome'),
             'valor'=> $request->input('valor'),
             'quantidade'=> $request->input('quantidade'),
-            'descricao'=> $request->input('descricao'),
+            'descricao'=> $request->input('descricao')
             
 
         ]);
 
         return view("enviarProduto");
     }
+
+public function verProdutosEnviados(){
+$api = Http::get('http://127.0.0.1:8090/produtos');
+$array = $api->json();
+
+    return view("verProdutosEnviados", compact('array'));
+}
+public function deletarProduto($id){
+    $del = Http::delete('http://127.0.0.1:8090/produtos/' . $id);
+    $id = $del->json();
+
+    return redirect()->route('verProdutosEnviados');
+}
 }

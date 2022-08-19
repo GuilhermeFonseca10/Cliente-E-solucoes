@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UsuarioController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,6 +31,9 @@ Route::match(['get', 'post'], '/cadastrar', [ ClienteController::class, 'cadastr
  Route::match(['get', 'post'], '/cliente/cadastrar', [ ClienteController::class, 'cadastrarCliente'])
     ->name('cadastrar_cliente');
 
+ Route::match(['get', 'post'], '/logar', [ UsuarioController::class, 'logar'])
+    ->name('logar');
+
 Route::match(['get', 'post'], '/{idproduto}/carrinho/adicionar', [ ProdutoController::class, 'adicionarCarrinho'])
     ->name('adicionar_carrinho');
 
@@ -40,5 +43,12 @@ Route::match(['get', 'post'], '/carrinho', [ ProdutoController::class, 'verCarri
 Route::match(['get', 'post'], '/{indice}/excluircarrinho', [ ProdutoController::class, 'excluirCarrinho'])
     ->name('carrinho_excluir');
 
-Route::match(['get', 'post'], '/enviarProduto', [ ProdutoController::class, 'enviarProduto'])
+Route::match(['get', 'post'], '/enviarProduto', [ ProdutoController::class, 'enviarProdutos'])
     ->name('enviarProduto');
+
+Route::match(['get'], '/verProdutosEnviados', [ ProdutoController::class, 'verProdutosEnviados'])
+    ->name('verProdutosEnviados');
+
+    Route::match(['get'], '/deletarProdutosEnviados/{id}', [ ProdutoController::class, 'deletarProduto'])
+    ->name('deletarProdutosEnviados');
+

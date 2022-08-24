@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\ProdutoController;
-use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,11 +26,9 @@ Route::match(['get', 'post'], '/categoria', [ ProdutoController::class, 'categor
     Route::match(['get', 'post'], '/{idcategoria}/categoria', [ ProdutoController::class, 'categoria'])
     ->name('categoria_por_id');
 
-Route::match(['get', 'post'], '/cadastrar', [ ClienteController::class, 'cadastrar'])
+Route::match(['get', 'post'], '/cadastrar', [ UsuarioController::class, 'cadastrar'])
     ->name('cadastrar');
 
- Route::match(['get', 'post'], '/cliente/cadastrar', [ ClienteController::class, 'cadastrarCliente'])
-    ->name('cadastrar_cliente');
 
  Route::match(['get', 'post'], '/logar', [ UsuarioController::class, 'logar'])
     ->name('logar');
@@ -46,9 +45,24 @@ Route::match(['get', 'post'], '/{indice}/excluircarrinho', [ ProdutoController::
 Route::match(['get', 'post'], '/enviarProduto', [ ProdutoController::class, 'enviarProdutos'])
     ->name('enviarProduto');
 
+    Route::match(['get'], '/enviarProdutoMenu', [ ProdutoController::class, 'enviarProdutoMenu'])
+    ->name('enviarProdutoMenu');
+
 Route::match(['get'], '/verProdutosEnviados', [ ProdutoController::class, 'verProdutosEnviados'])
     ->name('verProdutosEnviados');
 
     Route::match(['get'], '/deletarProdutosEnviados/{id}', [ ProdutoController::class, 'deletarProduto'])
     ->name('deletarProdutosEnviados');
+   
+    Route::match(['get', 'post', 'put'], '/atualizarProdutos/{id}', [ ProdutoController::class, 'atualizarProdutos'])
+    ->name('atualizarProdutos');
+   
 
+
+
+Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
+Route::get('auth/google/call-back', [GoogleAuthController::class, 'callbackGoogle']);
+
+Route::get('logout', [GoogleAuthController::class, 'logout'])->name('logout');
+
+//require __DIR__.'/auth.php';

@@ -65,7 +65,7 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
+        // 'users' => [b
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],

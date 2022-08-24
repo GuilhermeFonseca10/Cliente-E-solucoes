@@ -81,8 +81,8 @@ class ProdutoController extends Controller
             
 
         ]);
-
-        return view("enviarProduto");
+        return redirect()->route('verProdutosEnviados');
+      
     }
 
 public function verProdutosEnviados(){
@@ -97,4 +97,23 @@ public function deletarProduto($id){
 
     return redirect()->route('verProdutosEnviados');
 }
+public function atualizarProdutos($id, Request $request){
+    $atualizar = Http::put('http://127.0.0.1:8090/produtos/' . $id ,
+    [
+    'imagem'=> $request->input('imagem'),
+    'nome'=> $request->input('nome'),
+    'valor'=> $request->input('valor'),
+    'quantidade'=> $request->input('quantidade'),
+    'descricao'=> $request->input('descricao')
+    
+    
+    ]);
+    $id = $atualizar->json();
+    return view("atualizarProdutos");
+}
+public function enviarProdutoMenu(Request $request){
+
+    return view("enviarProdutoMenu");
+}
+
 }

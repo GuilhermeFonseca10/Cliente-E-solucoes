@@ -11,15 +11,23 @@
 </head>
 <body>
 <nav class="navbar navbar-light navbar-expand-md bg-light pl-5 pr-5 mb-5" style="padding-right:30px">
-    <a href="#" class="navbar-brand" style="padding:15px 30px">Shop</a>
+    <a href=" /" class="navbar-brand" style="padding:15px 30px">Shop</a>
     <div class="collapse navbar-collapse">
         <div class="navbar-nav">
+
             <a class="nav-link" href="{{ route('home') }}">Home</a>
             <a class="nav-link" href="{{ route('categoria') }}">Categorias</a>
-            <a class="nav-link" href="{{ route('cadastrar') }}">Cadastrar</a>
-            <a class="nav-link" href="{{ route('logar') }}">Logar</a>
-             <a class="nav-link" href="{{ route('enviarProduto') }}">Enviar produto</a>
+            
+             @if (!Auth::User())
+              <a class="nav-link" href="{{ route('google-auth') }}">Entrar</a>   
+              @else
+               
+                  <a class="nav-link" href="{{ route('enviarProdutoMenu') }}">Enviar produto</a>
              <a class="nav-link" href="{{ route('verProdutosEnviados') }}">Produtos enviados</a>
+               <a class="nav-link" href="{{ route('logout') }}">Sair</a>
+             @endif
+              
+            
 
         </div>
     </div>
@@ -32,15 +40,25 @@
 
 <div class="container">
     <div class="row">
-@if ($message = Session::get("erro"))
-<div class=col-12>
-<div class="alert alert-sucess">{{$message}}</div>
+
+
+@if (Auth::User())
+    <div class="col-12">
+    <p class="text-right"> Seja bem vindo, {{ Auth::User()->name}}. <a href="">sair</a></p>
+
+</div>
+@endif
+
+
+@if ($message = Session::get("err"))
+<div class="col-12">
+<div class="alert alert-danger">{{$message}}</div>
     </div>
 @endif
 
 @if ($message = Session::get("ok"))
 <div class=col-12>
-<div class="alert alert-sucess">{{$message}}</div>
+<div class="alert alert-success">{{$message}}</div>
     </div>
 @endif
 
